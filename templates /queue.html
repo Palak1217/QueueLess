@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QueueLess | Queue Status</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff5fa, #f1f4ff, #f8f2ff);
+            color: #30365c;
+        }
+
+        nav {
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 5px 20px rgba(60,70,120,0.08);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #5968d8;
+        }
+
+        .logo span {
+            color: #ee8eb9;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #626984;
+            margin-left: 25px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #5968d8;
+        }
+
+        .page {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #eeeaff;
+            color: #625ed0;
+            padding: 9px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .heading h1 {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .heading h1 span {
+            color: #5968d8;
+        }
+
+        .heading p {
+            color: #777e96;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.95);
+            padding: 35px;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(70,80,130,0.12);
+            border: 1px solid #eeeafa;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid #dddff0;
+            background: white;
+            color: #454b68;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: #6875db;
+            box-shadow: 0 0 0 4px #eeecff;
+        }
+
+        #queue-result {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #f7f3ff, #eef7ff);
+        }
+
+        #queue-result h2 {
+            font-size: 27px;
+            margin-bottom: 20px;
+            color: #454d8c;
+        }
+
+        #queue-result p {
+            color: #737991;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .stat {
+            background: white;
+            padding: 18px;
+            border-radius: 17px;
+            text-align: center;
+            box-shadow: 0 7px 18px rgba(70,80,130,0.08);
+        }
+
+        .stat-icon {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .stat-title {
+            font-size: 12px;
+            color: #858ba0;
+            margin-bottom: 7px;
+        }
+
+        .stat-value {
+            font-size: 21px;
+            font-weight: bold;
+            color: #5968d8;
+        }
+
+        .recommendation {
+            margin-top: 18px;
+            padding: 17px;
+            border-radius: 15px;
+            background: white;
+            color: #596079;
+            line-height: 1.6;
+        }
+
+        .best-time {
+            margin-top: 15px;
+            padding: 18px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #fff0f7, #f0edff);
+            border: 1px solid #eadff5;
+        }
+
+        .best-time-title {
+            font-weight: bold;
+            color: #5650a0;
+            margin-bottom: 8px;
+        }
+
+        .best-time-value {
+            font-size: 21px;
+            font-weight: bold;
+            color: #d05b94;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #858ba0;
+            font-size: 14px;
+        }
+
+        footer span {
+            color: #ee8eb9;
+        }
+
+        @media (max-width: 650px) {
+            .heading h1 {
+                font-size: 35px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                padding: 18px 5%;
+            }
+
+            nav a {
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        Queue<span>Less</span> ✨
+    </div>
+
+    <div>
+        <a href="/">Home</a>
+        <a href="/queue">Queue Status</a>
+    </div>
+
+</nav>
+
+
+<div class="page">
+
+    <div class="container">
+
+        <div class="heading">
+
+            <div class="badge">
+                ✦ Smart Campus Queue
+            </div>
+
+            <h1>
+                Check your <span>campus queue</span>
+            </h1>
+
+            <p>
+                Choose a facility and instantly see the
+                crowd level, waiting time and best time to visit.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <label for="facility">
+                🏫 Choose a facility
+            </label>
+
+            <select id="facility">
+
+                <option value="">
+                    Select a facility
+                </option>
+
+                {% for facility, data in queue_data.items() %}
+
+                <option
+                    value="{{ facility }}"
+                    data-people="{{ data.people }}"
+                    data-crowd="{{ data.crowd }}"
+                    data-wait="{{ data.wait }}"
+                    data-recommendation="{{ data.recommendation }}"
+                    data-best-time="{{ data.best_time }}"
+                >
+                    {{ facility }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <div id="queue-result">
+
+                <h2>
+                    🌸 Welcome to QueueLess
+                </h2>
+
+                <p>
+                    Select a facility above to see its current
+                    queue information.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <footer>
+            Made with <span>♥</span> for smarter campus life · QueueLess
+        </footer>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const facilitySelect =
+        document.getElementById("facility");
+
+    const result =
+        document.getElementById("queue-result");
+
+
+    facilitySelect.addEventListener("change", function () {
+
+        const selected =
+            this.options[this.selectedIndex];
+
+
+        if (!selected.value) {
+
+            result.innerHTML = `
+                <h2>🌸 Welcome to QueueLess</h2>
+
+                <p>
+                    Select a facility above to see its current
+                    queue information.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        const people =
+            selected.dataset.people;
+
+        const crowd =
+            selected.dataset.crowd;
+
+        const wait =
+            selected.dataset.wait;
+
+        const recommendation =
+            selected.dataset.recommendation;
+
+        const bestTime =
+            selected.dataset.bestTime;
+
+
+        let crowdEmoji = "💜";
+
+        if (crowd === "Low") {
+            crowdEmoji = "🟢";
+        }
+
+        else if (crowd === "Medium") {
+            crowdEmoji = "🟡";
+        }
+
+        else if (crowd === "High") {
+            crowdEmoji = "🔴";
+        }
+
+
+        result.innerHTML = `
+
+            <h2>
+                ${crowdEmoji} ${selected.value}
+            </h2>
+
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        👥
+                    </div>
+
+                    <div class="stat-title">
+                        PEOPLE WAITING
+                    </div>
+
+                    <div class="stat-value">
+                        ${people}
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        📊
+                    </div>
+
+                    <div class="stat-title">
+                        CROWD LEVEL
+                    </div>
+
+                    <div class="stat-value">
+                        ${crowd}
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        ⏱️
+                    </div>
+
+                    <div class="stat-title">
+                        ESTIMATED WAIT
+                    </div>
+
+                    <div class="stat-value">
+                        ${wait} min
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="recommendation">
+
+                💡 <strong>
+                    QueueLess Recommendation
+                </strong>
+
+                <br>
+
+                ${recommendation}
+
+            </div>
+
+
+            <div class="best-time">
+
+                <div class="best-time-title">
+                    🕒 Best Time to Visit
+                </div>
+
+                <div class="best-time-value">
+                    ${bestTime}
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+</script>
+
+</body>
+
+</html>

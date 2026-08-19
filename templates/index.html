@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QueueLess | Smart Campus</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff7fb, #eef4ff);
+            color: #30385f;
+            min-height: 100vh;
+        }
+
+        nav {
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 5px 20px rgba(50, 60, 100, 0.08);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #5264d8;
+        }
+
+        .logo span {
+            color: #f08bb8;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #555d7d;
+            margin-left: 25px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #5264d8;
+        }
+
+        .hero {
+            max-width: 1100px;
+            margin: 70px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #eeeaff;
+            color: #6369c9;
+            padding: 9px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 58px;
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            color: #5264d8;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #6d748e;
+            margin-bottom: 30px;
+        }
+
+        .explore-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: linear-gradient(135deg, #5969df, #7d65d9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 14px;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(82, 100, 216, 0.25);
+            transition: 0.3s;
+        }
+
+        .explore-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(82, 100, 216, 0.35);
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 20px 45px rgba(60, 70, 120, 0.13);
+        }
+
+        .status-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .facility {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 15px;
+            background: #f8f8ff;
+        }
+
+        .facility-name {
+            font-weight: bold;
+        }
+
+        .wait {
+            color: #6971cf;
+            font-weight: bold;
+        }
+
+        .features {
+            max-width: 1100px;
+            margin: 20px auto 70px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature {
+            background: white;
+            padding: 28px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(60, 70, 120, 0.08);
+        }
+
+        .feature-icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #777e96;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #858ba2;
+        }
+
+        @media (max-width: 800px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+                margin-top: 30px;
+            }
+
+            h1 {
+                font-size: 42px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                padding: 18px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <div class="logo">
+            Queue<span>Less</span> ✨
+        </div>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="/queue">Queue Status</a>
+        </div>
+
+    </nav>
+
+
+    <!-- HERO SECTION -->
+
+    <section class="hero">
+
+        <div>
+
+            <div class="badge">
+                ✨ Smart Campus Queue Predictor
+            </div>
+
+            <h1>
+                Stop waiting.<br>
+                <span>Start knowing.</span>
+            </h1>
+
+            <p>
+                QueueLess helps students check campus crowd levels,
+                estimate waiting times and discover the best time
+                to visit campus facilities.
+            </p>
+
+            <a href="/queue" class="explore-btn">
+                Explore QueueLess →
+            </a>
+
+        </div>
+
+
+        <!-- CAMPUS STATUS -->
+
+        <div class="status-card">
+
+            <h2>🏫 Campus Status</h2>
+
+            <div class="facility">
+                <div>
+                    🍔 <span class="facility-name">Canteen</span>
+                </div>
+
+                <div class="wait">
+                    24 min
+                </div>
+            </div>
+
+            <div class="facility">
+                <div>
+                    📚 <span class="facility-name">Library</span>
+                </div>
+
+                <div class="wait">
+                    5 min
+                </div>
+            </div>
+
+            <div class="facility">
+                <div>
+                    🖨️ <span class="facility-name">Xerox</span>
+                </div>
+
+                <div class="wait">
+                    12 min
+                </div>
+            </div>
+
+            <div class="facility">
+                <div>
+                    🏢 <span class="facility-name">Admin Office</span>
+                </div>
+
+                <div class="wait">
+                    31 min
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section class="features">
+
+        <h2>Make every campus trip smarter 💗</h2>
+
+        <div class="feature-grid">
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ⏱️
+                </div>
+
+                <h3>
+                    Waiting-Time Prediction
+                </h3>
+
+                <p>
+                    Estimate how long you may need to wait
+                    before visiting a facility.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🌸
+                </div>
+
+                <h3>
+                    Best Time Recommendation
+                </h3>
+
+                <p>
+                    Find a less crowded time and avoid
+                    unnecessary waiting.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Crowd Analytics
+                </h3>
+
+                <p>
+                    Understand campus crowd patterns and
+                    make smarter decisions.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        Made with 💗 for smarter campus life · QueueLess
+    </footer>
+
+
+</body>
+
+</html>
